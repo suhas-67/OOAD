@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="780" viewBox="0 0 1200 780">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8" fill="none" stroke="#222" stroke-width="1.5"/></marker>
+    <style>
+      .line { stroke:#222; stroke-width:2; fill:none; }
+      .dash { stroke:#222; stroke-width:1.5; stroke-dasharray:6 5; fill:none; }
+      .label { font-family:Arial, Helvetica, sans-serif; fill:#151515; }
+    </style>
+  </defs>
+  <rect width="1200" height="780" fill="#292929"/>
+  <text x="95" y="63" class="label" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#fff" text-decoration="underline">Module 1 – Login &amp; User Management</text>
+  <rect x="70" y="105" width="1060" height="620" fill="#fff"/>
+  <rect x="280" y="138" width="620" height="545" class="line"/>
+  <text x="300" y="169" class="label" font-size="18" font-weight="700">Ticket Booking System</text>
+
+  <!-- Passenger actor -->
+  <circle cx="145" cy="332" r="12" class="line"/>
+  <path d="M145 344 L145 389 M122 359 L145 350 L168 359 M145 389 L124 420 M145 389 L166 420" class="line"/>
+  <text x="108" y="447" class="label" font-size="18" font-weight="700">Passenger</text>
+
+  <!-- Admin actor -->
+  <circle cx="1045" cy="332" r="12" class="line"/>
+  <path d="M1045 344 L1045 389 M1022 359 L1045 350 L1068 359 M1045 389 L1024 420 M1045 389 L1066 420" class="line"/>
+  <text x="1020" y="447" class="label" font-size="18" font-weight="700">Admin</text>
+
+  <!-- Use cases -->
+  <ellipse cx="464" cy="255" rx="104" ry="36" class="line"/>
+  <text x="430" y="261" class="label" font-size="18">Register</text>
+  <ellipse cx="590" cy="355" rx="92" ry="36" class="line"/>
+  <text x="563" y="361" class="label" font-size="18">Login</text>
+  <ellipse cx="468" cy="468" rx="132" ry="36" class="line"/>
+  <text x="403" y="474" class="label" font-size="18">Forgot Password</text>
+  <ellipse cx="706" cy="468" rx="128" ry="36" class="line"/>
+  <text x="633" y="474" class="label" font-size="18">Change Password</text>
+  <ellipse cx="590" cy="575" rx="87" ry="36" class="line"/>
+  <text x="560" y="581" class="label" font-size="18">Logout</text>
+
+  <!-- Associations -->
+  <path d="M169 365 L360 272" class="line"/>
+  <path d="M169 365 L498 355" class="line"/>
+  <path d="M169 365 L336 456" class="line"/>
+  <path d="M169 365 L578 466" class="line"/>
+  <path d="M169 365 L503 570" class="line"/>
+  <path d="M1021 365 L682 355" class="line"/>
+  <path d="M1021 365 L834 466" class="line"/>
+  <path d="M1021 365 L677 570" class="line"/>
+
+  <!-- Simple UML relationship -->
+  <path d="M468 432 L548 386" class="dash" marker-end="url(#arrow)"/>
+  <text x="474" y="416" class="label" font-size="14">&lt;&lt;extend&gt;&gt;</text>
+</svg>

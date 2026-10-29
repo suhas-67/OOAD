@@ -4,7 +4,8 @@
  */
 import axios, { AxiosInstance, AxiosError } from 'axios';
 
-const BASE_URL = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_API_URL ?? 'http://localhost:5000/api';
+const envApiUrl = (import.meta as unknown as { env: Record<string, string> }).env?.VITE_API_URL;
+const BASE_URL = envApiUrl && envApiUrl.trim() ? envApiUrl : '/api';
 
 /** Create the shared Axios instance */
 export const apiClient: AxiosInstance = axios.create({
@@ -38,21 +39,11 @@ apiClient.interceptors.response.use(
       localStorage.removeItem('auth_user');
       // Only redirect if not already on auth pages
       const isAuthPage = ['/login', '/register'].includes(window.location.pathname);
-      if (!isAuthPage) window.location.href = '/login';
+      if (!isAuthPage) {
+        window.location.href = '/login';
+      }
     }
 
-    return Promise.reject(new ApiError(message, status ?? 0, error.response?.data));
+    return Promise.reject(new Error(message));
   }
 );
-
-/** Structured API error with HTTP status */
-export class ApiError extends Error {
-  constructor(
-    message: string,
-    public readonly status: number,
-    public readonly data?: unknown
-  ) {
-    super(message);
-    this.name = 'ApiError';
-  }
-}

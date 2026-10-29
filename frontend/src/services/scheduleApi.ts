@@ -9,6 +9,7 @@ export interface CreateSchedulePayload {
   arrivalTime: string;
   journeyDate: string;
   fare: number;
+  status?: string;
 }
 
 export const scheduleApi = {

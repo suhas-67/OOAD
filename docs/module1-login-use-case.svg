@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-labelledby="title description">
+  <title id="title">Module 1 – Login and User Management Use-Case Diagram</title>
+  <desc id="description">Passenger and Admin interact with login. Passenger can register. Both can recover a forgotten password from login.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#334155"/>
+    </marker>
+    <style>
+      .heading { font: 700 28px Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 16px Arial, sans-serif; fill: #475569; }
+      .boundary { fill: #f8fafc; stroke: #334155; stroke-width: 2.5; }
+      .boundary-label { font: 700 18px Arial, sans-serif; fill: #0f172a; }
+      .usecase { fill: #ffffff; stroke: #0f766e; stroke-width: 2.5; }
+      .usecase-text { font: 600 20px Arial, sans-serif; fill: #0f172a; text-anchor: middle; dominant-baseline: middle; }
+      .actor-line { fill: none; stroke: #0f172a; stroke-width: 3; stroke-linecap: round; }
+      .actor-label { font: 700 19px Arial, sans-serif; fill: #0f172a; text-anchor: middle; }
+      .association { stroke: #475569; stroke-width: 2.2; }
+      .extend { fill: none; stroke: #334155; stroke-width: 2; stroke-dasharray: 8 6; marker-end: url(#arrow); }
+      .relation-label { font: italic 15px Arial, sans-serif; fill: #334155; text-anchor: middle; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="700" fill="#ffffff"/>
+  <text x="600" y="58" class="heading" text-anchor="middle">Module 1 – Login &amp; User Management</text>
+  <text x="600" y="88" class="subtitle" text-anchor="middle">Ticket Booking and Reservation System</text>
+
+  <!-- System boundary -->
+  <rect x="250" y="125" width="700" height="485" rx="8" class="boundary"/>
+  <text x="275" y="158" class="boundary-label">Ticket Booking System</text>
+
+  <!-- Passenger actor -->
+  <g transform="translate(125 320)">
+    <circle cx="0" cy="-72" r="17" class="actor-line"/>
+    <path d="M 0 -55 L 0 2 M -32 -33 L 0 -48 L 32 -33 M 0 2 L -28 48 M 0 2 L 28 48" class="actor-line"/>
+    <text x="0" y="82" class="actor-label">Passenger</text>
+  </g>
+
+  <!-- Admin actor -->
+  <g transform="translate(1075 320)">
+    <circle cx="0" cy="-72" r="17" class="actor-line"/>
+    <path d="M 0 -55 L 0 2 M -32 -33 L 0 -48 L 32 -33 M 0 2 L -28 48 M 0 2 L 28 48" class="actor-line"/>
+    <text x="0" y="82" class="actor-label">Admin</text>
+  </g>
+
+  <!-- Use cases -->
+  <ellipse cx="600" cy="255" rx="142" ry="48" class="usecase"/>
+  <text x="600" y="255" class="usecase-text">Log In</text>
+
+  <ellipse cx="460" cy="425" rx="142" ry="48" class="usecase"/>
+  <text x="460" y="425" class="usecase-text">Register Account</text>
+
+  <ellipse cx="740" cy="425" rx="154" ry="48" class="usecase"/>
+  <text x="740" y="425" class="usecase-text">Reset Forgotten Password</text>
+
+  <!-- Associations -->
+  <line x1="158" y1="283" x2="458" y2="255" class="association"/>
+  <line x1="158" y1="331" x2="318" y2="410" class="association"/>
+  <line x1="158" y1="350" x2="586" y2="425" class="association"/>
+  <line x1="1042" y1="283" x2="742" y2="255" class="association"/>
+  <line x1="1042" y1="350" x2="894" y2="425" class="association"/>
+
+  <!-- Optional recovery flow from the login page -->
+  <path d="M 740 377 C 740 330, 680 310, 640 296" class="extend"/>
+  <text x="760" y="337" class="relation-label">&lt;&lt;extend&gt;&gt;</text>
+
+  <text x="600" y="660" class="subtitle" text-anchor="middle">Registration is available only to passengers; administrators use their assigned credentials.</text>
+</svg>

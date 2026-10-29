@@ -34,6 +34,9 @@ export const adminApi = {
   updateUserStatus: (userId: number, accountStatus: AccountStatus) =>
     apiClient.patch<{ success: boolean; message: string }>(`/admin/users/${userId}/status`, { accountStatus }).then(r => r.data),
 
+  approveRefund: (bookingId: number) =>
+    apiClient.post<{ success: boolean; message: string; bookingId: number; refundStatus: string }>('/admin/refunds/approve', { bookingId }).then(r => r.data),
+
   getReports: () =>
     apiClient.get<{ success: boolean; data: ReportData }>('/admin/reports').then(r => r.data),
 };

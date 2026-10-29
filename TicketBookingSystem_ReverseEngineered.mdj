@@ -1,0 +1,527 @@
+{
+  "_type": "Project",
+  "_id": "AAAAAAF0b5bdb00cd534",
+  "name": "TicketBookingSystem_ReverseEngineered",
+  "ownedElements": [
+    {
+      "_type": "UMLModel",
+      "_id": "AAAAAAF56b27e6e4fbb4",
+      "_parent": {
+        "$ref": "AAAAAAF0b5bdb00cd534"
+      },
+      "name": "Ticket Booking and Reservation System",
+      "ownedElements": [
+        {
+          "_type": "UMLActor",
+          "_id": "AAAAAAF6f54790ef5c54",
+          "name": "User"
+        },
+        {
+          "_type": "UMLActor",
+          "_id": "AAAAAAF97edc8fa96dd4",
+          "name": "Passenger"
+        },
+        {
+          "_type": "UMLActor",
+          "_id": "AAAAAAF0d750bed0d7c4",
+          "name": "Admin"
+        },
+        {
+          "_type": "UMLActor",
+          "_id": "AAAAAAF241da2bf629f4",
+          "name": "Payment Gateway"
+        },
+        {
+          "_type": "UMLActor",
+          "_id": "AAAAAAF94b6fc6f48094",
+          "name": "Notification Service"
+        },
+        {
+          "_type": "UMLActor",
+          "_id": "AAAAAAF61f9971ccde64",
+          "name": "OAuth Provider (Google/Apple)"
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAF11db7fab890e4",
+          "name": "User",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF409a7fde45444",
+              "name": "userId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF47b4f4c9afe44",
+              "name": "userName",
+              "type": "string",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF54d1d911c3dc4",
+              "name": "email",
+              "type": "string",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAFd976df28d65d4",
+              "name": "password",
+              "type": "string",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF03d7390dda2e4",
+              "name": "role",
+              "type": "UserRole",
+              "visibility": "private"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAF42a8b08ce2cd4",
+              "name": "login",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAF980b649700634",
+              "name": "logout",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAFe3f6a35377194",
+          "name": "Passenger",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAFfc3619f9bdde4",
+              "name": "passengerId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAFd80dfabe896a4",
+              "name": "name",
+              "type": "string",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAFa78d842f89454",
+              "name": "phoneNo",
+              "type": "string",
+              "visibility": "private"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAF969a5f14fd6e4",
+              "name": "register",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAF9c1cfabec9964",
+              "name": "updateProfile",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAF061ae94f447b4",
+              "name": "viewBookingHistory",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAFf4c416c2eab54",
+          "name": "Admin",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF18c03fbc69aa4",
+              "name": "adminId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF39ebe800143f4",
+              "name": "name",
+              "type": "string",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAFd53a1906c0b94",
+              "name": "role",
+              "type": "UserRole",
+              "visibility": "private"
+            }
+          ],
+          "operations": [
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAF03ce7b13d9af4",
+              "name": "manageSchedule",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAFb849815897404",
+              "name": "manageUsers",
+              "visibility": "public"
+            },
+            {
+              "_type": "UMLOperation",
+              "_id": "AAAAAAFd6a2296931074",
+              "name": "generateReport",
+              "visibility": "public"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAF63c4fa5c73564",
+          "name": "Schedule",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF7bd61f63d3304",
+              "name": "scheduleId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF26c183f5a83d4",
+              "name": "routeId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF69042d1b2fcf4",
+              "name": "trainId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF2f4a6c5b09f64",
+              "name": "busId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF87cedb223c764",
+              "name": "departureTime",
+              "type": "time",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAFe431f8768e9e4",
+              "name": "arrivalTime",
+              "type": "time",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF2896e9de519a4",
+              "name": "fare",
+              "type": "double",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAFf54fa40f5e054",
+              "name": "status",
+              "type": "string",
+              "visibility": "private"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAFfca9d506ca464",
+          "name": "Booking",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAFd86261b0da5f4",
+              "name": "bookingId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAFf12269ada5ce4",
+              "name": "passengerId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF9a0fb8aefe544",
+              "name": "scheduleId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF81087a7b51534",
+              "name": "bookingDate",
+              "type": "date",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF3ba93f3c09084",
+              "name": "bookingStatus",
+              "type": "string",
+              "visibility": "private"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAFc91031a7f7c14",
+          "name": "Payment",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF08e168f922bf4",
+              "name": "paymentId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF9703c0913e894",
+              "name": "bookingId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF5b403434174a4",
+              "name": "amount",
+              "type": "double",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF856cb0fa12dd4",
+              "name": "paymentStatus",
+              "type": "string",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF0c9810101f1e4",
+              "name": "paymentMethod",
+              "type": "string",
+              "visibility": "private"
+            }
+          ]
+        },
+        {
+          "_type": "UMLClass",
+          "_id": "AAAAAAFaf5a6da36b6c4",
+          "name": "Receipt",
+          "attributes": [
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF2093367d26ef4",
+              "name": "receiptId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF2acbd32573264",
+              "name": "bookingId",
+              "type": "int",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF28f78d3773324",
+              "name": "ticketNumber",
+              "type": "string",
+              "visibility": "private"
+            },
+            {
+              "_type": "UMLAttribute",
+              "_id": "AAAAAAF72527ca0e56e4",
+              "name": "generateDate",
+              "type": "date",
+              "visibility": "private"
+            }
+          ]
+        },
+        {
+          "_type": "UMLUseCaseDiagram",
+          "_id": "AAAAAAF6b9b749d029b4",
+          "name": "Overall Use Case Diagram"
+        },
+        {
+          "_type": "UMLUseCaseDiagram",
+          "_id": "AAAAAAFc1070511910e4",
+          "name": "Module 1 - Login & User Management"
+        },
+        {
+          "_type": "UMLUseCaseDiagram",
+          "_id": "AAAAAAFc1750ebc0ec24",
+          "name": "Module 2 - Ticket Search & Reservation"
+        },
+        {
+          "_type": "UMLUseCaseDiagram",
+          "_id": "AAAAAAF9031459c3af74",
+          "name": "Module 3 - Payment & Booking Management"
+        },
+        {
+          "_type": "UMLUseCaseDiagram",
+          "_id": "AAAAAAFe10a021d8fa74",
+          "name": "Module 4 - Admin & Schedule Management"
+        },
+        {
+          "_type": "UMLClassDiagram",
+          "_id": "AAAAAAF9320adf29b314",
+          "name": "Overall Class Diagram",
+          "defaultDiagram": true
+        },
+        {
+          "_type": "UMLClassDiagram",
+          "_id": "AAAAAAFb773c8e1883a4",
+          "name": "Module 1 Class Diagram (EBC)"
+        },
+        {
+          "_type": "UMLObjectDiagram",
+          "_id": "AAAAAAF6335cc8dfaad4",
+          "name": "Module 1 Object Diagram"
+        },
+        {
+          "_type": "UMLClassDiagram",
+          "_id": "AAAAAAFc210ee7d0dda4",
+          "name": "Module 2 Class Diagram (EBC)"
+        },
+        {
+          "_type": "UMLObjectDiagram",
+          "_id": "AAAAAAF08990eb363aa4",
+          "name": "Module 2 Object Diagram"
+        },
+        {
+          "_type": "UMLClassDiagram",
+          "_id": "AAAAAAF756641ee0bbd4",
+          "name": "Module 3 Class Diagram (EBC)"
+        },
+        {
+          "_type": "UMLObjectDiagram",
+          "_id": "AAAAAAFdb242ec23c234",
+          "name": "Module 3 Object Diagram"
+        },
+        {
+          "_type": "UMLClassDiagram",
+          "_id": "AAAAAAFe054ba69c3624",
+          "name": "Module 4 Class Diagram (EBC)"
+        },
+        {
+          "_type": "UMLObjectDiagram",
+          "_id": "AAAAAAF439e3a1b8d7b4",
+          "name": "Module 4 Object Diagram"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "AAAAAAFd756892e75f24",
+          "name": "Module 1 Sequence Diagram"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "AAAAAAFff947197695a4",
+          "name": "Module 2 Sequence Diagram"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "AAAAAAF64f491a328b84",
+          "name": "Module 3 Sequence Diagram"
+        },
+        {
+          "_type": "UMLSequenceDiagram",
+          "_id": "AAAAAAF7740f571a0634",
+          "name": "Module 4 Sequence Diagram"
+        },
+        {
+          "_type": "UMLCommunicationDiagram",
+          "_id": "AAAAAAFff7d1ace0b074",
+          "name": "Module 1 Collaboration Diagram"
+        },
+        {
+          "_type": "UMLActivityDiagram",
+          "_id": "AAAAAAF8506871038e24",
+          "name": "Module 1 Activity Diagram"
+        },
+        {
+          "_type": "UMLActivityDiagram",
+          "_id": "AAAAAAF57b90cbe0e2d4",
+          "name": "Module 2 Activity Diagram"
+        },
+        {
+          "_type": "UMLActivityDiagram",
+          "_id": "AAAAAAFce738c84dd0b4",
+          "name": "Module 3 Activity Diagram"
+        },
+        {
+          "_type": "UMLActivityDiagram",
+          "_id": "AAAAAAF42e6913f8c394",
+          "name": "Module 4 Activity Diagram"
+        },
+        {
+          "_type": "UMLStatechartDiagram",
+          "_id": "AAAAAAF18fa6f9008124",
+          "name": "Overall Statechart Diagram"
+        },
+        {
+          "_type": "UMLComponentDiagram",
+          "_id": "AAAAAAF4a81472e49f94",
+          "name": "Module 1 Component Diagram"
+        },
+        {
+          "_type": "UMLComponentDiagram",
+          "_id": "AAAAAAFdbf17b0d83bf4",
+          "name": "Module 2 Component Diagram"
+        },
+        {
+          "_type": "UMLComponentDiagram",
+          "_id": "AAAAAAF4cf12d5b169c4",
+          "name": "Module 3 Component Diagram"
+        },
+        {
+          "_type": "UMLComponentDiagram",
+          "_id": "AAAAAAF3e116a1c96a84",
+          "name": "Module 4 Component Diagram"
+        },
+        {
+          "_type": "UMLDeploymentDiagram",
+          "_id": "AAAAAAFcc6ddbdf14f34",
+          "name": "Overall Deployment Diagram"
+        }
+      ]
+    }
+  ]
+}

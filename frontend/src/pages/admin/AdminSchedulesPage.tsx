@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Plus, Trash2, Train, Bus, X, CheckCircle, AlertCircle } from 'lucide-react';
+import { Plus, Trash2, Train, Bus, X, CheckCircle, AlertCircle, Tag, Layers, Edit3 } from 'lucide-react';
+import { UpdateScheduleModal, ManagePricingModal, SeatInventoryModal } from '../../components/admin/AdminModals';
 import { scheduleApi, type CreateSchedulePayload } from '../../services/scheduleApi';
 import type { Schedule, Route, Train as TrainType, Bus as BusType } from '../../types/domain';
 import { formatDate, formatTime, formatCurrency } from '../../utils/formatters';
@@ -21,6 +22,9 @@ export const AdminSchedulesPage: React.FC = () => {
   const [showCreateTrain, setShowCreateTrain] = useState(false);
   const [showCreateBus, setShowCreateBus] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<number | null>(null);
+  const [updateScheduleId, setUpdateScheduleId] = useState<number | null>(null);
+  const [pricingScheduleId, setPricingScheduleId] = useState<number | null>(null);
+  const [seatScheduleId, setSeatScheduleId] = useState<number | null>(null);
 
   const fetchAll = useCallback(async () => {
     setLoading(true);
@@ -71,17 +75,33 @@ export const AdminSchedulesPage: React.FC = () => {
         title="Schedule Management"
         subtitle="Manage routes, vehicles, and schedules"
         action={
-          <button
-            onClick={() => {
-              if (tab === 'schedules') setShowCreateSchedule(true);
-              if (tab === 'routes') setShowCreateRoute(true);
-              if (tab === 'trains') setShowCreateTrain(true);
-              if (tab === 'buses') setShowCreateBus(true);
-            }}
-            className="btn-primary gap-2 text-sm"
-          >
-            <Plus size={15} />Add {tab.slice(0, -1).charAt(0).toUpperCase() + tab.slice(0, -1).slice(1)}
-          </button>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              onClick={() => setPricingScheduleId(schedules[0]?.scheduleId ?? 0)}
+              className="btn-secondary gap-1.5 text-sm"
+              title="Manage Ticket Pricing («extend» Manage Schedule)"
+            >
+              <Tag size={14} /> Ticket Pricing
+            </button>
+            <button
+              onClick={() => setSeatScheduleId(schedules[0]?.scheduleId ?? 0)}
+              className="btn-secondary gap-1.5 text-sm"
+              title="Manage Seat Inventory («include» Update Schedule)"
+            >
+              <Layers size={14} /> Seat Inventory
+            </button>
+            <button
+              onClick={() => {
+                if (tab === 'schedules') setShowCreateSchedule(true);
+                if (tab === 'routes') setShowCreateRoute(true);
+                if (tab === 'trains') setShowCreateTrain(true);
+                if (tab === 'buses') setShowCreateBus(true);
+              }}
+              className="btn-primary gap-2 text-sm"
+            >
+              <Plus size={15} />Add {tab.slice(0, -1).charAt(0).toUpperCase() + tab.slice(0, -1).slice(1)}
+            </button>
+          </div>
         }
       />
 
@@ -118,6 +138,9 @@ export const AdminSchedulesPage: React.FC = () => {
               trains={trains}
               buses={buses}
               onDelete={id => setDeleteTarget(id)}
+              onEdit={id => setUpdateScheduleId(id)}
+              onManagePricing={id => setPricingScheduleId(id)}
+              onManageSeats={id => setSeatScheduleId(id)}
             />
           )}
           {tab === 'routes' && <RouteTable routes={routes} />}
@@ -152,6 +175,34 @@ export const AdminSchedulesPage: React.FC = () => {
         />
       )}
 
+      {updateScheduleId !== null && (
+        <UpdateScheduleModal
+          schedules={schedules}
+          initialScheduleId={updateScheduleId}
+          onClose={() => setUpdateScheduleId(null)}
+          onUpdated={updated => {
+            setSchedules(prev => prev.map(s => s.scheduleId === updated.scheduleId ? updated : s));
+          }}
+        />
+      )}
+      {pricingScheduleId !== null && (
+        <ManagePricingModal
+          schedules={schedules}
+          initialScheduleId={pricingScheduleId}
+          onClose={() => setPricingScheduleId(null)}
+          onUpdated={updated => {
+            setSchedules(prev => prev.map(s => s.scheduleId === updated.scheduleId ? updated : s));
+          }}
+        />
+      )}
+      {seatScheduleId !== null && (
+        <SeatInventoryModal
+          schedules={schedules}
+          initialScheduleId={seatScheduleId}
+          onClose={() => setSeatScheduleId(null)}
+        />
+      )}
+
       <ConfirmDialog
         isOpen={deleteTarget !== null}
         title="Delete Schedule?"
@@ -173,7 +224,10 @@ const ScheduleTable: React.FC<{
   trains: TrainType[];
   buses: BusType[];
   onDelete: (id: number) => void;
-}> = ({ schedules, routes, trains, buses, onDelete }) => {
+  onEdit: (id: number) => void;
+  onManagePricing: (id: number) => void;
+  onManageSeats: (id: number) => void;
+}> = ({ schedules, routes, trains, buses, onDelete, onEdit, onManagePricing, onManageSeats }) => {
   const routeMap = Object.fromEntries(routes.map(r => [r.routeId, r]));
   const trainMap = Object.fromEntries(trains.map(t => [t.trainId, t]));
   const busMap   = Object.fromEntries(buses.map(b => [b.busId, b]));
@@ -221,10 +275,37 @@ const ScheduleTable: React.FC<{
                       {s.status}
                     </span>
                   </td>
-                  <td>
-                    <button onClick={() => onDelete(s.scheduleId)} aria-label={`Delete schedule ${s.scheduleId}`} className="text-slate-600 hover:text-danger-400 transition p-2">
-                      <Trash2 size={14} aria-hidden="true" />
-                    </button>
+                  <td className="text-right whitespace-nowrap">
+                    <div className="flex items-center justify-end gap-1">
+                      <button
+                        onClick={() => onManagePricing(s.scheduleId)}
+                        title="Manage Ticket Pricing («extend» Manage Schedule)"
+                        className="p-1.5 text-slate-500 hover:text-amber-600 hover:bg-slate-100 rounded-md transition"
+                      >
+                        <Tag size={14} />
+                      </button>
+                      <button
+                        onClick={() => onManageSeats(s.scheduleId)}
+                        title="Manage Seat Inventory («include» Update Schedule)"
+                        className="p-1.5 text-slate-500 hover:text-emerald-600 hover:bg-slate-100 rounded-md transition"
+                      >
+                        <Layers size={14} />
+                      </button>
+                      <button
+                        onClick={() => onEdit(s.scheduleId)}
+                        title="Update Schedule (Use Case: Update Schedule)"
+                        className="p-1.5 text-slate-500 hover:text-brand-600 hover:bg-slate-100 rounded-md transition"
+                      >
+                        <Edit3 size={14} />
+                      </button>
+                      <button
+                        onClick={() => onDelete(s.scheduleId)}
+                        title="Delete Schedule (Use Case: Delete Schedule)"
+                        className="p-1.5 text-slate-500 hover:text-danger-400 hover:bg-slate-100 rounded-md transition"
+                      >
+                        <Trash2 size={14} />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );

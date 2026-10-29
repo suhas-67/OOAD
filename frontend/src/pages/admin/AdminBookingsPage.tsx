@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Search, RefreshCw } from 'lucide-react';
+import { Search, RefreshCw, Download, CreditCard } from 'lucide-react';
+import { ApproveRefundModal, GenerateReportModal } from '../../components/admin/AdminModals';
 import { adminApi } from '../../services/adminApi';
 import type { AdminBookingRow } from '../../types/domain';
 import { formatDate, formatCurrency } from '../../utils/formatters';
@@ -10,6 +11,8 @@ export const AdminBookingsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [search, setSearch] = useState('');
+  const [showApproveRefund, setShowApproveRefund] = useState(false);
+  const [showGenerateReport, setShowGenerateReport] = useState(false);
 
   const fetchBookings = useCallback(async () => {
     setLoading(true);
@@ -41,9 +44,25 @@ export const AdminBookingsPage: React.FC = () => {
         title="Bookings Overview"
         subtitle={`${bookings.length} total bookings`}
         action={
-          <button onClick={fetchBookings} className="btn-ghost gap-1.5 text-sm">
-            <RefreshCw size={14} />Refresh
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowGenerateReport(true)}
+              className="btn-secondary gap-1.5 text-sm"
+              title="Generate Reports («extend» View Bookings)"
+            >
+              <Download size={14} /> Generate Reports
+            </button>
+            <button
+              onClick={() => setShowApproveRefund(true)}
+              className="btn-primary gap-1.5 text-sm"
+              title="Approve Refund («include» View Bookings)"
+            >
+              <CreditCard size={14} /> Approve Refund
+            </button>
+            <button onClick={fetchBookings} className="btn-ghost gap-1.5 text-sm">
+              <RefreshCw size={14} /> Refresh
+            </button>
+          </div>
         }
       />
 
@@ -77,6 +96,7 @@ export const AdminBookingsPage: React.FC = () => {
                   <th>Seats</th>
                   <th>Amount</th>
                   <th>Status</th>
+                  <th className="text-right">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -85,7 +105,7 @@ export const AdminBookingsPage: React.FC = () => {
                   : filtered.length === 0
                   ? (
                     <tr>
-                      <td colSpan={8}>
+                      <td colSpan={9}>
                         <EmptyState icon={<Search size={36} />} title="No bookings found" />
                       </td>
                     </tr>
@@ -105,6 +125,19 @@ export const AdminBookingsPage: React.FC = () => {
                       <td className="text-sm">{b.passengerDetails.length} seat(s)</td>
                       <td>{b.amount != null ? formatCurrency(b.amount) : 'Not available'}</td>
                       <td><BookingStatusBadge status={b.bookingStatus} /></td>
+                      <td className="text-right">
+                        {b.bookingStatus === 'CANCELLED' ? (
+                          <button
+                            onClick={() => setShowApproveRefund(true)}
+                            className="px-2.5 py-1 text-xs font-bold bg-emerald-50 text-emerald-800 hover:bg-emerald-100 border border-emerald-300 rounded-lg transition shadow-xs"
+                            title="Approve Refund for cancelled booking"
+                          >
+                            Approve Refund
+                          </button>
+                        ) : (
+                          <span className="text-xs text-slate-400">Settled</span>
+                        )}
+                      </td>
                     </tr>
                   ))
                 }
@@ -112,6 +145,20 @@ export const AdminBookingsPage: React.FC = () => {
             </table>
           </div>
         </div>
+      )}
+
+      {showApproveRefund && (
+        <ApproveRefundModal
+          bookings={bookings}
+          onClose={() => setShowApproveRefund(false)}
+          onRefundApproved={() => fetchBookings()}
+        />
+      )}
+
+      {showGenerateReport && (
+        <GenerateReportModal
+          onClose={() => setShowGenerateReport(false)}
+        />
       )}
     </div>
   );

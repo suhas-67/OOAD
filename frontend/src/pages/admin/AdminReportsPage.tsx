@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { TrendingUp, Users, BookOpen, Map, RefreshCw } from 'lucide-react';
+import { TrendingUp, Users, BookOpen, Map, RefreshCw, Download } from 'lucide-react';
+import { GenerateReportModal } from '../../components/admin/AdminModals';
 import { adminApi, type ReportData } from '../../services/adminApi';
 import { formatCurrency } from '../../utils/formatters';
 import { Spinner, ErrorState, SectionHeader } from '../../components/common/UIComponents';
@@ -8,6 +9,7 @@ export const AdminReportsPage: React.FC = () => {
   const [report, setReport] = useState<ReportData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [showGenerateReport, setShowGenerateReport] = useState(false);
 
   const fetchReport = useCallback(async () => {
     setLoading(true);
@@ -36,9 +38,18 @@ export const AdminReportsPage: React.FC = () => {
         title="Reports and analytics"
         subtitle="Revenue, booking, passenger, and route performance."
         action={
-          <button onClick={fetchReport} className="btn-ghost gap-1.5 text-sm">
-            <RefreshCw size={14} aria-hidden="true" />Refresh
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowGenerateReport(true)}
+              className="btn-primary gap-1.5 text-sm"
+              title="Generate & download reports («extend» View Bookings)"
+            >
+              <Download size={14} /> Generate Reports
+            </button>
+            <button onClick={fetchReport} className="btn-ghost gap-1.5 text-sm">
+              <RefreshCw size={14} aria-hidden="true" /> Refresh
+            </button>
+          </div>
         }
       />
 
@@ -151,6 +162,12 @@ export const AdminReportsPage: React.FC = () => {
             ))}
           </div>
         </section>
+      )}
+
+      {showGenerateReport && (
+        <GenerateReportModal
+          onClose={() => setShowGenerateReport(false)}
+        />
       )}
     </div>
   );
